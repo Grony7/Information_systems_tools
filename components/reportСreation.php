@@ -32,7 +32,14 @@ function reportCreation() {
                 if ($result->num_rows > 0) {
                     echo "<h3>$workshop_name</h3>";
                     echo "<table class='workshopTable'>";
-                    echo "<tr><th>Ф.И.О работника</th><th>Вид спецодежды</th><th>Стоимость единицы, тыс. руб.</th><th>Скидка, %</th><th>Стоимость с учетом скидки, тыс. руб.</th></tr>";
+                    echo "<tr>
+                            <th>Ф.И.О работника</th>
+                            <th>Вид спецодежды</th>
+                            <th>Стоимость единицы, тыс. руб.</th>
+                            <th>Скидка, %</th>
+                            <th>Стоимость с учетом скидки, тыс. руб.</th>
+                           </tr>
+                         ";
 
                     $total_workshop = 0;
 
@@ -41,7 +48,14 @@ function reportCreation() {
                         $cost = $row["стоимость_единицы"];
                         $costWithDiscount = $cost - ($cost * $discount / 100);
 
-                        echo "<tr><td>{$row['Ф_И_О_работника']}</td><td>{$row['вид_спецодежды']}</td><td>{$row['стоимость_единицы']}</td><td>{$row['скидка_на_спецодежду']}</td><td>$costWithDiscount</td></tr>";
+                        echo "<tr>
+                                <td>{$row['Ф_И_О_работника']}</td>
+                                <td>{$row['вид_спецодежды']}</td>
+                                <td>{$row['стоимость_единицы']}</td>
+                                <td>{$row['скидка_на_спецодежду']}</td>
+                                <td>$costWithDiscount</td>
+                               </tr>
+                              ";
 
                         $total_workshop += $costWithDiscount;
                     }
