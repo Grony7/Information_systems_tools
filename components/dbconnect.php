@@ -1,8 +1,8 @@
 <?php
 function connectToDatabase() {
     $server = 'localhost:3306';
-    $username = 'root';
-    $password = 'grony';
+    $username = 'root'; // ваш пользователь
+    $password = ''; // ваш пароль
     $database = 'workwear';
 
     $mysqli = new mysqli($server, $username, $password, $database);
