@@ -1,0 +1,33 @@
+.report {
+    padding: 10px 20px;
+}
+
+.workshopTable {
+    border-collapse: collapse;
+    min-width: 100%;
+}
+
+.workshopTable th,
+.workshopTable td {
+    padding: 6px;
+    border: 1px solid;
+}
+
+.selectYear {
+    width: 100px;
+    padding: 4px 6px;
+}
+
+.dataForm {
+    display: flex;
+    gap: 10px;
+}
+
+.dataButton {
+    padding: 6px;
+}
+
+.AllReportPrice {
+    font-size: 30px;
+    line-height: 36px;
+}
