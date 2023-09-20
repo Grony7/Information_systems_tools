@@ -2,7 +2,7 @@
 function connectToDatabase() {
     $server = 'localhost:3306';
     $username = 'root';
-    $password = ''; // не скажу
+    $password = 'grony';
     $database = 'workwear';
 
     $mysqli = new mysqli($server, $username, $password, $database);
