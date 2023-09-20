@@ -1,6 +1,6 @@
 <?php
 
-require 'components/dbconnect.php';
+require 'components/DBConnect.php';
 
 function createListOption()
 {

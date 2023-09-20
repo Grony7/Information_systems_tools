@@ -9,8 +9,8 @@
 </head>
 <body>
 <section class="menu">
-    <div>
-        <h1>Отчет о получении спецодежды по заводу за год</h1>
+    <div class="formWrapper">
+        <h1 class="title">Отчет о получении спецодежды по заводу за год</h1>
 
         <form class="dataForm" method="POST" id="reportForm" action="report.php">
             <label for="year">Год:</label>

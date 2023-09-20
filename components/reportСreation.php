@@ -1,5 +1,5 @@
 <?php
-require 'components/dbconnect.php';
+require 'components/DBConnect.php';
 
 function reportCreation()
 {
@@ -9,7 +9,11 @@ function reportCreation()
 
     $mysqli = connectToDatabase();
 
-    $sql_workshops = "SELECT DISTINCT ЦЕХИ.наименование_цеха FROM ЦЕХИ";
+    $sql_workshops = "SELECT DISTINCT ЦЕХИ.наименование_цеха 
+                      FROM ЦЕХИ
+                      JOIN РАБОТНИКИ ON ЦЕХИ.id = РАБОТНИКИ.id_цеха
+                      JOIN ПОЛУЧЕНИЕ ON РАБОТНИКИ.id = ПОЛУЧЕНИЕ.id_работника
+                      WHERE YEAR(ПОЛУЧЕНИЕ.дата_получения) = $year";
 
     $result_workshops = mysqli_query($mysqli, $sql_workshops);
 
@@ -73,8 +77,9 @@ function reportCreation()
 
         echo "<hr class='line'/>";
 
-        echo "<p class='allReportPriceContainer'><span class='allReportPrice'>Итого</span><span>$total_all_workshops тыс. руб.</span></p>" ;
+        echo "<p class='allReportPriceContainer'><span class='allReportPrice'>Итого</span><span>$total_all_workshops тыс. руб.</span></p>";
 
         mysqli_close($mysqli);
     }
 }
+
