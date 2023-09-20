@@ -5,10 +5,10 @@ function connectToDatabase() {
     $password = 'grony';
     $database = 'workwear';
 
-    $mysqli = new mysqli($server, $username, $password, $database);
+    $mysqli = mysqli_connect($server, $username, $password, $database);
 
-    if ($mysqli->connect_error) {
-        throw new Exception("Ошибка подключения к базе данных: " . $mysqli->connect_error);
+    if (!$mysqli) {
+        die("Ошибка подключения к базе данных: " . mysqli_connect_error());
     }
 
     return $mysqli;

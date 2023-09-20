@@ -1,9 +1,8 @@
 <?php
+require 'components/dbconnect.php';
+
 function reportCreation()
 {
-
-    require 'components/dbconnect.php';
-
     if (isset($_GET["year"])) {
         $year = $_GET["year"];
     }
@@ -14,10 +13,10 @@ function reportCreation()
 
     $result_workshops = mysqli_query($mysqli, $sql_workshops);
 
-    if ($result_workshops->num_rows > 0) {
+    if ($result_workshops) {
         $total_all_workshops = 0;
 
-        echo "<h2>Отчет о получении спецодежды за $year год</h2>";
+        echo "<h1 class='mainTitle'>Отчет о получении спецодежды по заводу за $year год</h1>";
 
         while ($row_workshop = mysqli_fetch_assoc($result_workshops)) {
             $workshop_name = $row_workshop["наименование_цеха"];
@@ -33,8 +32,8 @@ function reportCreation()
 
             $result = mysqli_query($mysqli, $sql);
 
-            if ($result->num_rows > 0) {
-                echo "<h3>$workshop_name</h3>";
+            if ($result) {
+                echo "<h2>$workshop_name</h2>";
                 echo "<table class='workshopTable'>";
                 echo "<tr>
                             <th>Ф.И.О работника</th>
@@ -68,15 +67,14 @@ function reportCreation()
 
                 echo "</table>";
 
-                echo "<p>$workshop_name</p>";
-                echo "<p>Итого по цеху: $total_workshop тыс. руб.</p>";
+                echo "<p class='workshopPriceContainer'><span class='workshopPrice'>Итого по цеху: </span><span>$total_workshop тыс. руб.</span></p>";
             }
         }
 
-        echo "<h2 class='AllReportPrice'>Общая стоимость для всех цехов:</h2>";
-        echo "<p><strong>$total_all_workshops тыс. руб.</strong></p>";
+        echo "<hr class='line'/>";
+
+        echo "<p class='allReportPriceContainer'><span class='allReportPrice'>Итого</span><span>$total_all_workshops тыс. руб.</span></p>" ;
 
         mysqli_close($mysqli);
     }
 }
-

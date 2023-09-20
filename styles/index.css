@@ -1,0 +1,17 @@
+.menu {
+    padding: 10px 20px;
+}
+
+.selectYear {
+    width: 100px;
+    padding: 4px 6px;
+}
+
+.dataForm {
+    display: flex;
+    gap: 10px;
+}
+
+.dataButton {
+    padding: 6px;
+}
