@@ -11,8 +11,8 @@
 <section class="report">
 
     <?php
-        require 'components/reportСreation.php';
-        reportCreation();
+        require 'components/createReport.php';
+        creatReport();
     ?>
 
     <a class="backLink" href="/">На главную</a>
