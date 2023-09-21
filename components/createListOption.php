@@ -6,7 +6,7 @@ function createListOption()
 {
     $mysqli = connectToDatabase();
 
-    $sql_years = "SELECT DISTINCT YEAR(дата_получения) AS год FROM ПОЛУЧЕНИЕ";
+    $sql_years = "SELECT DISTINCT YEAR(receiving_date) AS год FROM receiving";
 
     $result_years = mysqli_query($mysqli, $sql_years);
 

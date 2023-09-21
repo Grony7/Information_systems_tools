@@ -9,11 +9,11 @@ function reportCreation()
 
     $mysqli = connectToDatabase();
 
-    $sql_workshops = "SELECT DISTINCT ЦЕХИ.наименование_цеха 
-                      FROM ЦЕХИ
-                      JOIN РАБОТНИКИ ON ЦЕХИ.id = РАБОТНИКИ.id_цеха
-                      JOIN ПОЛУЧЕНИЕ ON РАБОТНИКИ.id = ПОЛУЧЕНИЕ.id_работника
-                      WHERE YEAR(ПОЛУЧЕНИЕ.дата_получения) = $year";
+    $sql_workshops = "SELECT DISTINCT workshops.workshop_name 
+                      FROM workshops
+                      JOIN employees ON workshops.id = employees.workshop_id
+                      JOIN receiving ON employees.id = receiving.employee_id
+                      WHERE YEAR(receiving.receiving_date) = $year";
 
     $result_workshops = mysqli_query($mysqli, $sql_workshops);
 
@@ -23,16 +23,16 @@ function reportCreation()
         echo "<h1 class='mainTitle'>Отчет о получении спецодежды по заводу за $year год</h1>";
 
         while ($row_workshop = mysqli_fetch_assoc($result_workshops)) {
-            $workshop_name = $row_workshop["наименование_цеха"];
+            $workshop_name = $row_workshop["workshop_name"];
 
-            $sql = "SELECT РАБОТНИКИ.Ф_И_О_работника, СПЕЦОДЕЖДА.вид_спецодежды, 
-                    СПЕЦОДЕЖДА.стоимость_единицы, РАБОТНИКИ.скидка_на_спецодежду, 
-                    РАБОТНИКИ.id_цеха, ЦЕХИ.наименование_цеха
-                    FROM РАБОТНИКИ
-                    JOIN ПОЛУЧЕНИЕ ON РАБОТНИКИ.id = ПОЛУЧЕНИЕ.id_работника
-                    JOIN СПЕЦОДЕЖДА ON ПОЛУЧЕНИЕ.id_спецодежды = СПЕЦОДЕЖДА.id
-                    JOIN ЦЕХИ ON РАБОТНИКИ.id_цеха = ЦЕХИ.id
-                    WHERE YEAR(ПОЛУЧЕНИЕ.дата_получения) = $year AND ЦЕХИ.наименование_цеха = '$workshop_name'";
+            $sql = "SELECT employees.employee_name, special_clothing.clothing_type, 
+                    special_clothing.unit_cost, employees.discount_on_clothing, 
+                    employees.workshop_id, workshops.workshop_name
+                    FROM employees
+                    JOIN receiving ON employees.id = receiving.employee_id
+                    JOIN special_clothing ON receiving.clothing_id = special_clothing.id
+                    JOIN workshops ON employees.workshop_id = workshops.id
+                    WHERE YEAR(receiving.receiving_date) = $year AND workshops.workshop_name = '$workshop_name'";
 
             $result = mysqli_query($mysqli, $sql);
 
@@ -51,15 +51,15 @@ function reportCreation()
                 $total_workshop = 0;
 
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $discount = $row["скидка_на_спецодежду"];
-                    $cost = $row["стоимость_единицы"];
+                    $discount = $row["discount_on_clothing"];
+                    $cost = $row["unit_cost"];
                     $costWithDiscount = $cost - ($cost * $discount / 100);
 
                     echo "<tr>
-                                <td>{$row['Ф_И_О_работника']}</td>
-                                <td>{$row['вид_спецодежды']}</td>
-                                <td>{$row['стоимость_единицы']}</td>
-                                <td>{$row['скидка_на_спецодежду']}</td>
+                                <td>{$row['employee_name']}</td>
+                                <td>{$row['clothing_type']}</td>
+                                <td>{$row['unit_cost']}</td>
+                                <td>{$row['discount_on_clothing']}</td>
                                 <td>$costWithDiscount</td>
                                </tr>
                               ";
@@ -82,4 +82,3 @@ function reportCreation()
         mysqli_close($mysqli);
     }
 }
-
