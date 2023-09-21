@@ -76,7 +76,6 @@ function creatReport()
         }
 
         echo "<hr class='line'/>";
-
         echo "<p class='allReportPriceContainer'><span class='allReportPrice'>Итого</span><span>$total_all_workshops руб.</span></p>";
 
         mysqli_close($mysqli);
