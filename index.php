@@ -10,14 +10,18 @@
 <body>
 <section class="menu">
     <div class="formWrapper">
-        <h1 class="title">Отчет о получении спецодежды по заводу за год</h1>
+        <h1 class="title">База данных выдачи спецодежды</h1>
 
+
+        <a class="button" href="./tables">Таблицы</a>
+
+        <h2>Отчет за год:</h2>
         <form class="dataForm" method="POST" id="reportForm" action="report.php">
             <label for="year">Год:</label>
             <select name="year" id="year" required class="selectYear" onchange="updateFormAction()">
                 <?php
-                    require 'components/createListOption.php';
-                    createListOption();
+                require 'components/createListOption.php';
+                createListOption();
                 ?>
             </select>
             <button class="dataButton" type="submit"> Сформировать отчет</button>

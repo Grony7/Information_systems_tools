@@ -1,0 +1,64 @@
+.tableSection {
+    padding: 10px 20px 60px;
+    margin: 0 auto;
+    width: 1400px;
+}
+
+.buttonWrapper {
+    width: 700px;
+    margin: 0 auto;
+}
+
+.pageTitle {
+    margin: 40px auto 20px;
+
+    font-size: 50px;
+    line-height: 60px;
+    text-align: center;
+}
+
+.tableList {
+    display: grid;
+    margin: 0 auto;
+    width: 700px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    list-style: none;
+}
+
+.button {
+    display: flex;
+    margin: 0 auto;
+    padding: 6px 12px;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 14px;
+    line-height: 18px;
+    color: #000;
+    text-align: center;
+    background-color: #d9d9d9;;
+    border: 2px solid #000;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.backLinkButton {
+    margin: 0 0 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    line-height: 18px;
+    background-color: transparent;
+    border: none;
+    padding: 6px 12px;
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+}
+
+.backLinkButton span {
+    display: block;
+    margin: 0 0 0 10px
+}

@@ -1,0 +1,62 @@
+.tableSection {
+    padding: 10px 20px 60px;
+    margin: 0 auto;
+    width: 1400px;
+}
+
+.pageTitle {
+    margin: 10px auto 20px;
+
+    font-size: 50px;
+    line-height: 60px;
+    text-align: center;
+}
+
+.buttonWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 16px;
+}
+
+.button {
+    display: flex;
+    padding: 6px 12px;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 14px;
+    line-height: 18px;
+    color: #000;
+    text-align: center;
+    background-color: #d9d9d9;;
+    border: 2px solid #000;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.backLinkButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    padding: 6px 12px;
+}
+
+.table {
+    border-collapse: collapse;
+    min-width: 100%;
+}
+
+.table th,
+.table td {
+    padding: 6px;
+    border: 1px solid;
+}
+
+.iconButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
