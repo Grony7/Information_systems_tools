@@ -43,7 +43,7 @@
                     </a>
                 </td>
                 <td>
-                    <a class='iconButton' href='delete.php?id=" . $row['id'] . "'>
+                    <a class='iconButton' href='delete.php?id=" . $row['id'] . "' onclick='return confirmDelete();'>
                         <img src='/public/icon/delete-icon.svg' width='20' height='20' alt='удалить'>
                     </a>
                 </td>          
@@ -57,5 +57,10 @@
     ?>
 
 </section>
+<script>
+    function confirmDelete() {
+        return confirm("Вы уверены, что хотите удалить эту запись?");
+    }
+</script>
 </body>
 </html>
