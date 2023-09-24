@@ -32,7 +32,7 @@ CREATE TABLE `employees` (
   KEY `fk_workshop` (`workshop_id`),
   CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`workshop_id`) REFERENCES `workshops` (`id`),
   CONSTRAINT `fk_workshop` FOREIGN KEY (`workshop_id`) REFERENCES `workshops` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (1,'Иванов Иван Иванович','Токарь',40,1),(2,'Васильев Василий Васильевич','Слесарь',30,1),(3,'Михайлов Михаил Михайлович','Токарь',30,2),(4,'Андреев Андрей Андреевич','Фрезеровщик',45,3),(5,'Александров Александр Александрович','Сварщик',50,4),(6,'Сергеев Сергей Сергеевич','Электрик',40,5),(7,'Дуров Павел Михайлович','Инженер-технолог',35,2),(8,'Сидоров Сидор Сидорович','Начальник цеха',0,3),(9,'Воронин Николай Михайлович','Электрик',40,4),(10,'Мамонтов Петр Николаевич','Электрик',40,5);
+INSERT INTO `employees` VALUES (1,'Иванов Иван Иванович','Токарь',40,1),(2,'Васильев Василий Васильевич','Слесарь',30,1),(3,'Михайлов Михаил Михайлович','Токарь',30,2),(4,'Андреев Андрей Андреевич','Фрезеровщик',45,3),(5,'Александров Александр Александрович','Сварщик',50,4),(6,'Сергеев Сергей Сергеевич','Электрик',40,5),(7,'Дуров Павел Михайлович','Инженер-технолог',35,2),(8,'Сидоров Сидор Сидорович','Начальник цеха',0,3),(9,'Воронин Николай Михайлович','Электрик',40,4),(10,'Мамонтов Петр Николаевич','Электрик',40,5),(11,'Иванов Сергей Петрович','Начальник цеха',0,1),(12,'Петров Иван Литвененко','Начальник цеха',0,2),(13,'Алексеев Николай Резниченко','Начальник цеха',0,4),(14,'Николаев Сергей Рудаков','Начальник цеха',0,5);
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +63,7 @@ CREATE TABLE `receiving` (
   KEY `fk_clothing` (`clothing_id`),
   CONSTRAINT `fk_clothing` FOREIGN KEY (`clothing_id`) REFERENCES `special_clothing` (`id`),
   CONSTRAINT `fk_employee` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `special_clothing` (
   `wearing_period_months` int DEFAULT NULL,
   `unit_cost` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,9 +112,11 @@ DROP TABLE IF EXISTS `workshops`;
 CREATE TABLE `workshops` (
   `id` int NOT NULL AUTO_INCREMENT,
   `workshop_name` text,
-  `supervisor_name` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `supervisor_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `supervisor_id` (`supervisor_id`),
+  CONSTRAINT `workshops_ibfk_1` FOREIGN KEY (`supervisor_id`) REFERENCES `employees` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,17 +125,9 @@ CREATE TABLE `workshops` (
 
 LOCK TABLES `workshops` WRITE;
 /*!40000 ALTER TABLE `workshops` DISABLE KEYS */;
-INSERT INTO `workshops` VALUES (1,'Цех 1','Иванов Сергей Петрович'),(2,'Цех 2','Петров Иван Литвененко'),(3,'Цех 3','Сидоров Сидор Сидорович'),(4,'Цех 4','Алексеев Николай Резниченко'),(5,'Цех 5','Николаев Сергей Рудаков');
+INSERT INTO `workshops` VALUES (1,'Цех 1',11),(2,'Цех 2',12),(3,'Цех 3',8),(4,'Цех 4',13),(5,'Цех 5',14);
 /*!40000 ALTER TABLE `workshops` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'workwear'
---
-
---
--- Dumping routines for database 'workwear'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -144,4 +138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-21 13:56:00
+-- Dump completed on 2023-09-24 22:10:56
