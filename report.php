@@ -8,14 +8,26 @@
     <link rel="stylesheet" href="styles/report.css">
 </head>
 <body>
-<section class="report">
 
-    <?php
-    require 'components/createReport.php';
-    creatReport();
-    ?>
 
-    <a class="backLink" href="/">На главную</a>
-</section>
+<?php
+require $_SERVER['DOCUMENT_ROOT'] . '/components/createReport.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/components/auth.php';
+authorizationRequired();
+
+$can_create_report = rightsCheck('create_report');
+if (!$can_create_report) {
+    echo "<div class='messageWrapper'>";
+    echo "<p class='textMessage'>У вас нет прав для удаления записи.</p>";
+    echo "<a class='formButton' href='index.php'>Вернуться на главную</a></div>";
+} else {
+    echo "<section class='report'>";
+        creatReport();
+        echo "<a class='backLink' href=' / '>На главную</a>";
+    echo "</section>";
+    }
+?>
+
+
 </body>
 </html>

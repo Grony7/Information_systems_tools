@@ -1,3 +1,8 @@
+<?php
+require $_SERVER['DOCUMENT_ROOT'] . '/components/auth.php';
+authorizationRequired();
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>

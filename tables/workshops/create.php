@@ -14,6 +14,16 @@
         <img src='/public/icon/back-icon.svg' width='30' height='30' alt='изменить'>
     </a>
 
+    <?php
+    require $_SERVER['DOCUMENT_ROOT'] . '/components/auth.php';
+    authorizationRequired();
+
+    $can_create = rightsCheck('create');
+    if (!$can_create) {
+        echo "<p>У вас нет прав для создания записи.</p>";
+    } else {
+    ?>
+
     <form class="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <label for="workshopName">Цех:</label>
         <input type="text" name="workshopName" id="workshopName" required>
@@ -57,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
 }
 
 mysqli_close($mysqli);
+}
 ?>
 
 </body>

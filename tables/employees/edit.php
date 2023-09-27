@@ -8,13 +8,16 @@
 <body>
 
 <?php
-require '../../components/DBConnect.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/components/DBConnect.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/components/auth.php';
+authorizationRequired();
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = $_GET['id'];
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $can_edit = rightsCheck('edit');
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $can_edit) {
         $employee_name = $_POST['employeeName'];
         $position = $_POST['position'];
         $discount_on_clothing = $_POST['discountOnClothing'];
@@ -43,6 +46,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
     } else {
 
+        if (!$can_edit) {
+            echo "<div class='messageWrapper'>
+                    <div class='messageContent'>
+                        <p class='textMessage'>У вас недостаточно прав для редактирования записи.</p>
+                        <a class='formButton' href='index.php'>Вернуться к списку записей</a>
+                    </div>
+                  </div>
+                ";
+            exit;
+        }
+
         $mysqli = connectToDatabase();
         $sql = "SELECT * FROM EMPLOYEES WHERE id = ?";
         $stmt = mysqli_prepare($mysqli, $sql);
@@ -63,7 +77,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             mysqli_stmt_close($stmt);
             mysqli_close($mysqli);
             exit;
-
         }
 
         $workshops_sql = "SELECT id, workshop_name FROM WORKSHOPS";

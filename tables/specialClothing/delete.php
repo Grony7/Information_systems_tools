@@ -10,29 +10,38 @@
     <div class='messageContent'>
 
         <?php
-        require '../../components/DBConnect.php';
+        require $_SERVER['DOCUMENT_ROOT'] . '/components/auth.php';
+        authorizationRequired();
 
-        if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-            $id = $_GET['id'];
+        $can_delete = rightsCheck('delete');
+        if (!$can_delete) {
+            echo "<p class='textMessage'>У вас нет прав для удаления записи.</p>";
+            echo "<a class='formButton' href='index.php'>Вернуться к списку</a>";
+        } else {
+            require '../../components/DBConnect.php';
 
-            $mysqli = connectToDatabase();
-            $sql = "DELETE FROM SPECIAL_CLOTHING WHERE id = ?";
-            $stmt = mysqli_prepare($mysqli, $sql);
-            mysqli_stmt_bind_param($stmt, "i", $id);
+            if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+                $id = $_GET['id'];
 
-            if (mysqli_stmt_execute($stmt)) {
-                echo "<p class='textMessage'>Запись успешно удалена.</p>";
+                $mysqli = connectToDatabase();
+                $sql = "DELETE FROM SPECIAL_CLOTHING WHERE id = ?";
+                $stmt = mysqli_prepare($mysqli, $sql);
+                mysqli_stmt_bind_param($stmt, "i", $id);
+
+                if (mysqli_stmt_execute($stmt)) {
+                    echo "<p class='textMessage'>Запись успешно удалена.</p>";
+                } else {
+                    echo "<p class='textMessage'>Ошибка удаления записи: " . mysqli_error($mysqli) . "</p>";
+                }
+
+                mysqli_stmt_close($stmt);
+                mysqli_close($mysqli);
             } else {
-                echo "<p class='textMessage'>Ошибка удаления записи: " . mysqli_error($mysqli) . "</p>";
+                echo "<p class='textMessage'>Некорректный идентификатор записи.</p>";
             }
 
-            mysqli_stmt_close($stmt);
-            mysqli_close($mysqli);
-        } else {
-            echo "<p class='textMessage'>Некорректный идентификатор записи.</p>";
+            echo "<a class='formButton' href='index.php'>Вернуться к списку</a>";
         }
-
-        echo "<a class='formButton' href='index.php'>Вернуться к списку</a>";
         ?>
     </div>
 </section>

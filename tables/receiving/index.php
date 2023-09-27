@@ -12,12 +12,21 @@
         <a class="backLinkButton" href="../">
             <img src='/public/icon/back-icon.svg' width='30' height='30' alt='изменить'>
         </a>
-        <a class="button" href="create.php">Создать новую запись</a>
+        <?php
+
+        require $_SERVER['DOCUMENT_ROOT'] . '/components/auth.php';
+        authorizationRequired();
+
+        $can_create = rightsCheck('create');
+        if ($can_create) {
+            echo "<a class='button' href='create.php'>Создать новую запись</a>";
+        }
+        ?>
     </div>
 
     <?php
 
-    require '../../components/DBConnect.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/components/DBConnect.php';
 
     function formatDate($date)
     {
@@ -49,35 +58,50 @@
                 <th>Сотрудник</th>
                 <th>Одежда</th>
                 <th>Дата получения</th>
-                <th>Подпись</th>
-                <th>Изменить</th>
-                <th>Удалить</th>
-            </tr>";
+                <th>Подпись</th>";
+
+        $can_edit = rightsCheck('edit');
+        $can_delete = rightsCheck('delete');
+
+        if ($can_edit || $can_delete) {
+            echo "
+            <th>Изменить</th>
+                <th>Удалить</th>";
+        }
+
+        echo "</tr>";
+
 
         while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>
                 <td>" . $row['employee_name'] . "</td>
                 <td>" . $row['clothing_type'] . "</td>
                 <td>" . formatDate($row['receiving_date']) . "</td>
-                <td>" . ($row['signature'] ? 'Есть подпись' : 'Нет подписи') . "</td>
-                <td>
-                    <a class='iconButton' href='edit.php?id=" . $row['id'] . "'>
-                        <img src='/public/icon/edit-icon.svg' width='20' height='20' alt='изменить'>
-                    </a>
-                </td>
-                <td>
-                    <a class='iconButton' href='delete.php?id=" . $row['id'] . "' onclick='return confirmDelete();'>
-                        <img src='/public/icon/delete-icon.svg' width='20' height='20' alt='удалить'>
-                    </a>
-                </td>       
-                </tr>";
-        }
+                <td>" . ($row['signature'] ? 'Есть подпись' : 'Нет подписи') . "</td>";
+            if ($can_edit) {
+                echo "<td>
+                        <a class='iconButton' href='edit.php?id=" . $row['id'] . "'>
+                            <img src='/public/icon/edit-icon.svg' width='20' height='20' alt='изменить'>
+                        </a>
+                      </td>";
+            }
 
+            if ($can_delete) {
+                echo "<td>
+                        <a class='iconButton' href='delete.php?id=" . $row['id'] . "' onclick='return confirmDelete();'>
+                            <img src='/public/icon/delete-icon.svg' width='20' height='20' alt='удалить'>
+                        </a>
+                      </td>";
+            }
+
+            echo "</tr>";
+        }
         echo "</table>";
     }
 
     mysqli_close($mysqli);
     ?>
+
 </section>
 <script>
     function confirmDelete() {

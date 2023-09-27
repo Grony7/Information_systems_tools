@@ -8,12 +8,16 @@
 <body>
 
 <?php
-require '../../components/DBConnect.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/components/DBConnect.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/components/auth.php';
+authorizationRequired();
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = $_GET['id'];
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $can_edit = rightsCheck('edit');
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $can_edit) {
         $clothing_type = $_POST['clothing_type'];
         $wearing_period_months = $_POST['wearing_period_months'];
         $unit_cost = $_POST['unit_cost'];
@@ -39,6 +43,18 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         mysqli_stmt_close($stmt);
         mysqli_close($mysqli);
     } else {
+        if (!$can_edit) {
+            echo "<div class='messageWrapper'>
+                    <div class='messageContent'>
+                        <p class='textMessage'>У вас недостаточно прав для редактирования записи.</p>
+                        <a class='formButton' href='index.php'>Вернуться к списку записей</a>
+                    </div>
+                  </div>
+                ";
+            exit;
+        }
+
+
         $mysqli = connectToDatabase();
         $sql = "SELECT * FROM SPECIAL_CLOTHING WHERE id = ?";
         $stmt = mysqli_prepare($mysqli, $sql);

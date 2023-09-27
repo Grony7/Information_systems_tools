@@ -11,6 +11,17 @@
     <a class="backLinkButton" href="index.php">
         <img src='/public/icon/back-icon.svg' width='30' height='30' alt='изменить'>
     </a>
+
+    <?php
+    require $_SERVER['DOCUMENT_ROOT'] . '/components/auth.php';
+    authorizationRequired();
+
+    $can_create = rightsCheck('create');
+    if (!$can_create) {
+        echo "<p>У вас нет прав для создания записи.</p>";
+    } else {
+    ?>
+
     <form class="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <label for="employeeName">Имя сотрудника:</label>
         <input type="text" name="employeeName" id="employeeName" required>
@@ -45,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
     $discount_on_clothing = min($discount_on_clothing, 100);
 
     $sql = "INSERT INTO EMPLOYEES (employee_name, position, discount_on_clothing, workshop_id)
-            VALUES ('$employee_name', '$position', $discount_on_clothing, $workshop_id)";
+                VALUES ('$employee_name', '$position', $discount_on_clothing, $workshop_id)";
 
     $mysqli = connectToDatabase();
 
@@ -55,7 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
 
     mysqli_close($mysqli);
 }
+}
 ?>
+
 
 </body>
 </html>

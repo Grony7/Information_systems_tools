@@ -45,20 +45,21 @@
 .formButton {
     grid-column: 1 / 3;
     display: inline-flex;
-    padding: 6px 12px;
     margin: 0 auto;
     justify-content: center;
     align-items: center;
     min-width: 200px;
     cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
 
     font-size: 14px;
     line-height: 18px;
-    color: #000;
     text-align: center;
-    background-color: #d9d9d9;;
-    border: 2px solid #000;
-    border-radius: 4px;
+
     text-decoration: none;
 }
 

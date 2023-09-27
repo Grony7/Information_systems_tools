@@ -12,6 +12,16 @@
         <img src='/public/icon/back-icon.svg' width='30' height='30' alt='изменить'>
     </a>
 
+    <?php
+    require $_SERVER['DOCUMENT_ROOT'] . '/components/auth.php';
+    authorizationRequired();
+
+    $can_create = rightsCheck('create');
+    if (!$can_create) {
+        echo "<p>У вас нет прав для создания записи.</p>";
+    } else {
+    ?>
+
     <form class="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <label for="employeeId">Сотрудник:</label>
         <select name="employeeId" id="employeeId" required>
@@ -58,7 +68,6 @@
 </section>
 
 <?php
-$mysqli = connectToDatabase();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
     $employee_id = $_POST['employeeId'];
@@ -66,14 +75,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
     $receiving_date = $_POST['receivingDate'];
     $signature = isset($_POST['signature']) ? 1 : 0;
 
+    $mysqli = connectToDatabase();
+
     $sql = "INSERT INTO RECEIVING (employee_id, clothing_id, receiving_date, signature)
             VALUES ($employee_id, $clothing_id, '$receiving_date', $signature)";
     if (!mysqli_query($mysqli, $sql)) {
         echo "<script>alert('Ошибка при добавлении записи')</script>";
     }
-}
 
-mysqli_close($mysqli);
+    mysqli_close($mysqli);
+}
+}
 ?>
 
 </body>
