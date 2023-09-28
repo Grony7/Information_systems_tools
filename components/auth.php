@@ -1,10 +1,8 @@
 <?php
-
-
 session_start();
 
-
-function rightsCheck ($action) {
+function rightsCheck($action)
+{
     $user_role = isset($_SESSION['user_role']) ? $_SESSION['user_role'] : 'Гость';
 
     $allowed_actions = [
@@ -16,7 +14,8 @@ function rightsCheck ($action) {
     return in_array($action, $allowed_actions[$user_role]);
 }
 
-function authorizationRequired() {
+function authorizationRequired()
+{
     if (!isset($_SESSION['user_email'])) {
         header('Location: /auth/login.php');
         exit();
@@ -35,7 +34,8 @@ function logout()
     session_destroy();
 }
 
-function isLoggedin() {
+function isLoggedin()
+{
     return isset($_SESSION['user_email']);
 }
 
