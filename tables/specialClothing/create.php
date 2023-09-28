@@ -43,7 +43,7 @@
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
-    require '../../components/DBConnect.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/components/DBConnect.php';
 
     $clothing_type = $_POST["clothingType"];
     $wearing_period_months = $_POST["wearingPeriodMonths"];
@@ -61,9 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create"])) {
     if (!mysqli_query($mysqli, $sql)) {
         echo "<script>alert('Ошибка при добавлении записи')</script>";
     }
+    mysqli_close($mysqli);
 }
 
-mysqli_close($mysqli);
 }
 ?>
 

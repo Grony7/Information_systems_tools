@@ -1,7 +1,7 @@
 .tableSection {
     padding: 10px 20px 60px;
     margin: 0 auto;
-    width: 1400px;
+    max-width: 1400px;
 }
 
 .pageTitle {

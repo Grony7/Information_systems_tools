@@ -39,6 +39,7 @@
 
 .reg {
     text-align: center;
+    margin: 10px 0 0;
 }
 
 .authLink {
@@ -68,4 +69,8 @@
 .successText {
     color: #008000;
     font-weight: bold;
+}
+
+.TAC {
+    text-align: center;
 }

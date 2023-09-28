@@ -26,7 +26,7 @@
         <label for="employeeId">Сотрудник:</label>
         <select name="employeeId" id="employeeId" required>
             <?php
-            require '../../components/DBConnect.php';
+            require $_SERVER['DOCUMENT_ROOT'] . '/components/DBConnect.php';
 
             $mysqli = connectToDatabase();
 

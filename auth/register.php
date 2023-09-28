@@ -56,7 +56,7 @@
         <input class="input" type="email" id="email" name="email" required><br>
         </label>
         <label class="label" for="password">Пароль:
-        <input class="input" type="password" id="password" name="password" required><br>
+        <input class="input" type="password" id="password" name="password" minlength="8" required><br>
         </label>
         <button type="submit" class="authButton">Зарегистрироваться</button>
     </form>

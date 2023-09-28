@@ -94,7 +94,6 @@ function updateFailedAttemptInfo($email, $mysqli) {
         $stmt = mysqli_prepare($mysqli, $query);
         mysqli_stmt_bind_param($stmt, "iss", $failed_attempt_count, $current_time, $email);
         mysqli_stmt_execute($stmt);
-        echo "Current Time: " . $current_time;
 
         if (mysqli_stmt_error($stmt)) {
             die("Ошибка выполнения SQL-запроса: " . mysqli_stmt_error($stmt));

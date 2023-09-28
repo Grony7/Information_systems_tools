@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="/styles/auth.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+<section class="authSection">
+    <h1 class="pageTitle">Вход</h1>
+
 <?php
 require $_SERVER['DOCUMENT_ROOT'] . '/components/DBConnect.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/components/auth.php';
@@ -12,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     if (isUserBlocked($email, $max_failed_attempts, $block_duration_minutes, $mysqli)) {
-        echo "<p class='errorText'>Доступ заблокирован. Пожалуйста, подождите.</p>";
+        echo "<p class='TAC errorText'>Доступ заблокирован. Пожалуйста, подождите.</p>";
     } else {
         $query = "SELECT id, email, password, role FROM users WHERE email = ?";
         $stmt = mysqli_prepare($mysqli, $query);
@@ -33,10 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 updateFailedAttemptInfo($email, $mysqli);
 
-                echo "<p class='errorText'>Неверный пароль.</p>";
+                echo "<p class='TAC errorText'>Неверный пароль.</p>";
             }
         } else {
-            echo "<p class='errorText'>Пользователь с таким email не найден.</p>";
+            echo "<p class='TAC errorText'>Пользователь с таким email не найден.</p>";
         }
 
         mysqli_stmt_close($stmt);
@@ -46,19 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 mysqli_close($mysqli);
 ?>
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход</title>
-    <link rel="stylesheet" href="/styles/auth.css">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-</head>
-<body>
-<section class="authSection">
-    <h1 class="pageTitle">Вход</h1>
-
     <form class="authForm" method="POST">
         <label class="label" for="email">Email:
             <input class="input" type="email" id="email" name="email" required><br>
@@ -66,11 +66,14 @@ mysqli_close($mysqli);
         <label class="label" for="password">Пароль:
             <input class="input" type="password" id="password" name="password" required><br>
         </label>
+        <div class="g-recaptcha" data-sitekey="6Lczu1soAAAAALdL4qdk3b6j2S1WxkXyBghmjBJj"></div>
 
         <button class="authButton" type="submit">Войти</button>
     </form>
 
     <p class="reg">Нет аккаунта? <a class="authLink" href="register.php">Зарегистрируйтесь</a></p>
+    <p class="reg">Забыли пароль? <a class="authLink" href="recovery.php">Восстановить пароль</a></p>
+
 </section>
 </body>
 </html>

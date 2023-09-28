@@ -19,7 +19,7 @@
             echo "<a class='formButton' href='index.php'>Вернуться к списку</a>";
         } else {
 
-            require '../../components/DBConnect.php';
+            require $_SERVER['DOCUMENT_ROOT'] . '/components/DBConnect.php';
 
             if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                 $id = $_GET['id'];

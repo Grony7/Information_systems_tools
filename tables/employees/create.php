@@ -32,7 +32,7 @@
         <label for="workshopId">Цех:</label>
         <select name="workshopId" id="workshopId">
             <?php
-            require '../../components/DBConnect.php';
+            require $_SERVER['DOCUMENT_ROOT'] . '/components/DBConnect.php';
             $mysqli = connectToDatabase();
             $sql = "SELECT id, workshop_name FROM WORKSHOPS";
             $result = mysqli_query($mysqli, $sql);
